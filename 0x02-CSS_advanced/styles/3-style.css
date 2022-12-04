@@ -7,6 +7,10 @@
     --text-color: var(--color-black);
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     color: var(--text-color);
 }
