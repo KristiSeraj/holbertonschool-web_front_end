@@ -464,5 +464,5 @@ a:active {
 }
 
 .footer {
-    padding: var(--section-footer-padding)
+    padding: var(--footer-padding)
 }
