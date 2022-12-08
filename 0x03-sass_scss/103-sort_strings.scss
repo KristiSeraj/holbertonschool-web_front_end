@@ -1,4 +1,45 @@
 /* Sorting */
 @import "103-sort_list.scss";
+$default: a b c d e f g h i j k l m n o p q r s t u v w x y z !default;
 
-@debug $list_to_sort
+@function str_cmp($string_1, $string_2, $order: $default) {
+	$string_1: to-lower-case($string_1 + unquote(''));
+	$string_2: to-lower-case($string_2 + unquote(''));
+
+	@for $i from 1 through min(str-length($string_1), str_length($string_2)) {
+		$char_1: str-slice($string_1, $i, $i);
+		$char_2: str-slice($string_2, $i, $i);
+
+		@if $char_1 and $char_2 and index($order, $char_1) != index($order, $char_2) {
+			@return index($order, $char_1) < index($order, $char_2);
+		}
+	}
+	@return str-length($string_1) < str-length($string_2);
+}
+
+@function swap($list, $index_1, $index_2) {
+	@if abs($index_1) > length($list) or abs($index_2) > length($list) {
+		@return $list;
+	}
+
+	$tmp: nth($list, $index_1);
+	$list: set-nth($list, $index_1, nth($list, $index_2));
+	$list: set-nth($list, $index_2, $tmp);
+
+	@return $list;
+}
+
+@function sort($list, $order: $default) {
+	@for $i from 1 through length($list) {
+		@for $j from $i * -1 through -1 {
+			$j: abs($j);
+			
+			@if $j > 1 and str_cmp(nth($list, $j), nth($list, $j - 1), $order) {
+				$list: swap($list, $j, $j - 1);
+			}
+		}
+	}
+	@return $list;
+}
+
+@debug sort($list_to_sort);
