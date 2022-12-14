@@ -756,6 +756,6 @@
     }
 
     .form-group:focus-within .form-help {
-      max-width: 20rem;
+      max-height: 20rem;
       margin: .4rem 0 0;
     }
