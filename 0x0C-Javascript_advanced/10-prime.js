@@ -18,6 +18,6 @@ function countPrimeNumbers() {
     return count;
 }
 
-console.log(countPrimeNumbers())
+console.log(countPrimeNumbers() * 100)
 
-console.log(`Execution time of printing countPrimeNumbers was ${performance.now()} milliseconds.`)
+console.log(`Execution time of calculating prime numbers 100 times was ${performance.now()} milliseconds.`)

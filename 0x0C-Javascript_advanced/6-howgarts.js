@@ -12,11 +12,11 @@ class studentHowgarts {
     }
 
     rewardStudent() {
-        this.#changeScoreBy(1);
+        this.#changeScoreBy();
     }
 
     penalizeStudent() {
-        this.#changeScoreBy(-1);
+        this.#changeScoreBy();
     }
 
     getScore() {
