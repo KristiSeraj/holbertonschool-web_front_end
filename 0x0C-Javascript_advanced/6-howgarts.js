@@ -1,37 +1,32 @@
-class studentHowgarts {
-    privateScore = 0;
-    name = null;
+const studentHowgarts = (function() {
+    let privateScore = 0;
+    let name = null;
 
-    #changeScoreBy(points) {
-        let a = this.privateScore + points;
-        return a;
+    let changeScoreBy = function(points) {
+        privateScore += points;
+        return privateScore;
     }
 
-    setName(newName) {
-        this.name = newName;
-    }
+    return {
+        name,
+        privateScore,
+        setName: (newName) => {
+            name = newName;
+        },
+        rewardStudent: function() {
+        		return changeScoreBy(1);
+        },
+        penalizeStudent: () => changeScoreBy(-1),
+        getScore: () => `${name}: ${privateScore}`
+    };
+})();
 
-    rewardStudent() {
-        this.#changeScoreBy();
-    }
-
-    penalizeStudent() {
-        this.#changeScoreBy();
-    }
-
-    getScore() {
-        return `${this.name}: ${this.privateScore}`;
-    }
-}
-
-let harry = new studentHowgarts();
-
+let harry = studentHowgarts;
 harry.setName("Harry");
 harry.rewardStudent(4);
 console.log(harry.getScore());
 
-let draco = new studentHowgarts();
-
+let draco = studentHowgarts;
 draco.setName("Draco");
 draco.rewardStudent(1);
 draco.penalizeStudent(3);
