@@ -1,7 +1,7 @@
 let stock = {"macbook": 2, "iphone": 4};
 
 function processPayment(itemName) {
-    delete stock[itemName];
+    stock[itemName] -= 1;
     console.log(`Payment is being processed for item ${itemName}`);
 }
 
@@ -12,6 +12,13 @@ function processError(itemName) {
 
 function processOrder(itemName, callbackPayment, callbackError) {
     console.log(`Verifying the stock of ${itemName}`);
-    callbackError = processError(itemName);
-    callbackPayment = processPayment(itemName);
+    if (stock[itemName] > 0) {
+        callbackPayment(itemName);
+    }
+    else {
+        callbackError(itemName);
+    }
 }
+
+let userInput = prompt(alert("Please enter the item you would like to purchase (Macbook, iPhone)"));
+processOrder(userInput.toLowerCase(), processPayment, processError);
