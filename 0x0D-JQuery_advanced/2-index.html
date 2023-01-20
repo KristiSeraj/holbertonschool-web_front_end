@@ -6,34 +6,38 @@
         <meta charset="utf-8" />
         <title>Task 0</title>
         <script src="https://code.jquery.com/jquery-3.6.3.slim.min.js" integrity="sha256-ZwqZIVdD3iXNyGHbSYdsmWP//UBokj2FHAxKuSBKDSo=" crossorigin="anonymous"></script>
-        <script type="application/javascript">
-            $(function createFamilyTree() {
-                let tb = $(
-                    "<table>\
-                        <tr>\
-                            <th>Firstname</th>\
-                            <th>Lastname</th>\
-                        </tr>\
-                        <tr>\
-                            <td>Guilliame</td>\
-                            <td>Salva</td>\
-                        </tr>\
-                        <tr>\
-                            <td>Paulette</td>\
-                            <td>Salva</td>\
-                        </tr>\
-                        <tr>\
-                            <td>Antoine</td>\
-                            <td>Salva</td>\
-                        </tr>\
-                    </table>")
-                $("body").append(tb);
-            })
-            createFamilyTree();
-        </script>
     </head>
 
     <body>
+        <script type="application/javascript">
+            function createFamilyTree() {
+                let tb = $(
+                    "<table>\
+                        <thead>\
+                            <tr>\
+                                <th>Firstname</th>\
+                                <th>Lastname</th>\
+                            </tr>\
+                        </thead>\
+                        <tbody>\
+                            <tr>\
+                                <td>Guilliame</td>\
+                                <td>Salva</td>\
+                            </tr>\
+                            <tr>\
+                                <td>Paulette</td>\
+                                <td>Salva</td>\
+                            </tr>\
+                            <tr>\
+                                <td>Antoine</td>\
+                                <td>Salva</td>\
+                            </tr>\
+                        </tbody>\
+                    </table>")
+                $("body").append(tb);
+            }
+            createFamilyTree();
+        </script>
     </body>
 
 </html>

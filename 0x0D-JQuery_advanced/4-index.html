@@ -28,7 +28,11 @@
                 let tb = $("<table></table>").append(thead, tbody);
                 $("body").append(tb);
             }
+            function replaceFamilyTree() {
+                $("tbody").html("<tr><td>Gerard</td><td>Bonissa</td></tr>");
+            }
             createFamilyTree();
+            replaceFamilyTree();
         </script>
     </body>
 
