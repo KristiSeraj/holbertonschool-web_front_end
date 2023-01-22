@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+    <head>
+
+        <meta charset="utf-8" />
+        <title>Task 0</title>
+        <script src="https://code.jquery.com/jquery-3.6.3.slim.min.js" integrity="sha256-ZwqZIVdD3iXNyGHbSYdsmWP//UBokj2FHAxKuSBKDSo=" crossorigin="anonymous"></script>
+    </head>
+
+    <body>
+        <script type="application/javascript">
+            function createFamilyTree() {
+                $("body").append("<table><thead><tr><th>Firstname</th><th>Lastname</th></tr></thead></table>")
+                $("table").append("<tbody></tbody>")
+            }
+            function addNewMember(firstName, lastName, position) {
+                // $("tbody").append("<tr>" + "<td>" + firstName + "</td>" + "<td>" + lastName + "</td>" + "<td>(x)</td>" + "</tr>")
+                
+                if (position === "before") {
+                    $("tbody").prepend("<tr>" + "<td>" + firstName + "</td>" + "<td>" + lastName + "</td>" + "<td>(x)</td>" + "</tr>")
+                }
+                else {
+                    $("tbody").append("<tr>" + "<td>" + firstName + "</td>" + "<td>" + lastName + "</td>" + "<td>(x)</td>" + "</tr>")
+                }
+
+                $("tbody tr td:last-child").css("background-color", "orange");
+                $("tbody tr td:last-child").click(function() {
+                    $(this).parent().remove();
+                })
+            }
+            function createForm() {
+                $('<input type="text"><input type="text">').insertBefore("table");
+                $('<select><option value="before">Before</option><option value="after">After</option></select>').insertBefore("table");
+                $('<input type="submit" value="Submit">').insertBefore("table");
+                $('input:submit').click(function() {
+                    let firstInput = $('input:first').val();
+                    let secondInput = $('input:nth-of-type(2)').val();
+                    let selectInput = $("select").find(":selected").val();
+                    addNewMember(firstInput, secondInput, selectInput);
+                })
+            }
+            createFamilyTree();
+            // addNewMember("Guilliame", "Salva");
+            // addNewMember("Arielle", "Snizt");
+            // addNewMember("Fanette", "Snizt");
+            // addNewMember("Gerard", "Snizt");
+            // addNewMember("Victor", "Salva");
+            createForm();
+        </script>
+    </body>
+
+</html>
