@@ -14,9 +14,7 @@
                 $("body").append("<table><thead><tr><th>Firstname</th><th>Lastname</th></tr></thead></table>")
                 $("table").append("<tbody></tbody>")
             }
-            function addNewMember(firstName, lastName, position) {
-                // $("tbody").append("<tr>" + "<td>" + firstName + "</td>" + "<td>" + lastName + "</td>" + "<td>(x)</td>" + "</tr>")
-                
+            function addNewMember(firstName, lastName, position) {               
                 if (position === "before") {
                     $("tbody").prepend("<tr>" + "<td>" + firstName + "</td>" + "<td>" + lastName + "</td>" + "<td>(x)</td>" + "</tr>")
                 }
@@ -41,11 +39,6 @@
                 })
             }
             createFamilyTree();
-            // addNewMember("Guilliame", "Salva");
-            // addNewMember("Arielle", "Snizt");
-            // addNewMember("Fanette", "Snizt");
-            // addNewMember("Gerard", "Snizt");
-            // addNewMember("Victor", "Salva");
             createForm();
         </script>
     </body>
