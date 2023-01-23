@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+    <head>
+
+        <meta charset="utf-8" />
+        <title>Task 0</title>
+        <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+    </head>
+
+    <body>
+        <script type="application/javascript">
+            function addPostRow(data) {
+                $("body").append(`<p><span>(delete)</span><span>Post created with id ${data.id}, title: ${data.title}, author: ${data.author}</span></p>`);
+                $("p span:nth-of-type(1)").click(function() {
+                    deletePost(data.id);
+                })
+            }
+
+            function listPosts() {
+                $.get("http://localhost:3000/posts")
+                    .done(function(data) {
+                        $.each(data, function(index, value) {
+                            addPostRow(value);
+                        })
+                    })
+                    .fail(() => {
+                        alert("Server Error");
+                    })
+            }
+
+            function buildForm() {
+                let form = $("<form></form>");
+                form.append('<div><label for="author">Author</label><input type="text" id="author"></div>')
+                form.append('<div><label for="title">Title</label><textarea id="title"></textarea></div>')
+                form.append('<input type="submit" onclick="return false" value="Submit">');
+                $("body").append(form);
+                $("input:submit").click(function() {
+                    sendForm();
+                })
+
+            }
+
+            function sendForm() {
+                $("form").after("<p>About to send the query to the API</p>");
+                let params = {title: $("#title").val(), author: $("#author").val()};
+                console.log("hello");
+                $.post("http://localhost:3000/posts", params)
+                    .done(() => {
+                        addPostRow(params);
+                    })
+                    .fail(() => {
+                        alert("About to send the query to the API");
+                    })
+            }
+
+            function deletePost(id) {
+                $.deelte
+            }
+
+            $(document).ready(function() {
+                listPosts();
+                buildForm();
+            })
+        </script>
+    </body>
+
+</html>
