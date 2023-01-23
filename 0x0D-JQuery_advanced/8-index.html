@@ -14,7 +14,7 @@
                 $("body").append('<input type="text">');
                 $("body").append('<input type="submit" value="Submit">');
                 $("body").append("<ul></ul>");
-                $("body").append("<ul></ul>");
+                $("body").append('<ul id="pagination"></ul>');
                 $("input:submit").click(function() {
                     let getInput = $("input:text").val();
                     queryWikipedia(getInput);
@@ -22,24 +22,42 @@
             }
 
             function addNewArticle(id, title, snippet) {
-                $("ul:first").append("<li><p><span>" + id + " - </span><b>" + title + "</b></p><p>" + snippet + "</p></li>");
+                $("ul:first").append(`<li><p><span>${id} - </span><b>${title}</b></p><p>${snippet}</p></li>`);
             }
 
-            function queryWikipedia(search, offset) {
-                $.getJSON("https://en.wikipedia.org/w/api.php?origin=*&action=query&list=search&format=json", {srsearch: search, sroffset: offset}, function(data) {
+            function queryWikipedia(search, offset = 0) {
+                $.getJSON("https://en.wikipedia.org/w/api.php?", {action: "query", list: "search", srsearch: search, format: "json", origin: "*", sroffset: offset}, function(data) {
                     $.each(data.query.search, function(index, value) {
                         addNewArticle(value.pageid, value.title, value.snippet);
                     })
+                    buildPagination(data.query.searchinfo.totalhits, 10, data.continue.sroffset ? data.continue.sroffset - 10 : data.query.searchinfo.totalhits);
                 });
             }
 
-            // function buildPagination(numberOfItems, itemsPerPage, currentOffset) {
+            function buildPagination(numberOfItems, itemsPerPage, currentOffset) {
+                let paginationList = $("ul#pagination");
+                paginationList.empty();
 
-            // }
+                for (let i = 0; i <= numberOfItems / itemsPerPage; i++) {
+                    let paginationItem = $(`<li>${i + 1}</li>`)
+                                    .css({
+                                        "cursor": "pointer",
+                                        "marginLeft": "10px",
+                                        "display": "inline",
+                                        "font-weight": (i == currentOffset / 10) ? "bold" : "normal"
+                                    });
+                    paginationItem.click(function() {
+                        let offset = i * 10;
+                        if (offset >= numberOfItems) {
+                            offset -= numberOfItems % 10;
+                        }
+                        queryWikipedia($("input:text").val(), offset);
+                    })
 
-            $(document).ready(function() {
-                createSearchForm();
-            })
+                    paginationList.append(paginationItem);
+                }
+            }
+            createSearchForm();
         </script>
     </body>
 

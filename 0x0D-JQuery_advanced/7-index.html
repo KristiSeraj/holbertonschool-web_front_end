@@ -21,20 +21,17 @@
             }
 
             function addNewArticle(id, title, snippet) {
-                $("ul").append("<li><p><span>" + id + " - </span><b>" + title + "</b></p><p>" + snippet + "</p></li>");
+                $("ul").append(`<li><p><span>${id} - </span><b>${title}</b></p><p>${snippet}</p></li>`);
             }
 
             function queryWikipedia(search) {
-                $.getJSON("https://en.wikipedia.org/w/api.php?origin=*&action=query&list=search&format=json", {srsearch: search}, function(data) {
+                $.getJSON("https://en.wikipedia.org/w/api.php?", {action: "query", list: "search", srsearch: search, format: "json", origin: "*"}, function(data) {
                     $.each(data.query.search, function(index, value) {
                         addNewArticle(value.pageid, value.title, value.snippet);
                     })
                 });
             }
-
-            $(document).ready(function() {
-                createSearchForm();
-            })
+            createSearchForm();
         </script>
     </body>
 
