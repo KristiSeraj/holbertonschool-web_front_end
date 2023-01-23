@@ -35,6 +35,12 @@
                 $("input:submit").click(function() {
                     sendForm();
                 })
+                $("input:submit").keypress(function(e) {
+                    if (e.which === 13) {
+                        e.preventDefault();
+                        sendForm();
+                    }
+                })
 
             }
 
