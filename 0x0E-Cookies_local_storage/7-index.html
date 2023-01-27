@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping cart</title>
+</head>
+<body>
+    <script>
+        let items = ["Shampoo", "Soap", "Sponge", "Water"];
+        if (typeof(Storage) === undefined) {
+            alert("Sorry, your browser does not support Web storage. Try again with a better one")
+        }
+        else {
+            createStore();
+            displayCart();
+        }
+
+        function getCartFromStorage() {
+            let cart = JSON.parse(sessionStorage.getItem('cart'));
+            if (cart) {
+                return cart;
+            }
+            else {
+                return {};
+            }
+        }
+
+        function addItemToCart(item) {
+            let cart = getCartFromStorage();
+
+            if (cart[item]) {
+                cart[item]++;
+            }
+            else {
+                cart[item] = 1;
+            }
+            sessionStorage.setItem("cart", JSON.stringify(cart));
+            displayCart();
+        }
+
+        function removeItemFromCart(item) {
+            let cart = getCartFromStorage();
+            delete cart[item];
+            sessionStorage.setItem("cart", JSON.stringify(cart));
+            displayCart();
+        }
+
+        function clearCart() {
+            sessionStorage.clear();
+            displayCart();
+        }
+
+        function createStore() {
+            let availableHeading = document.createElement("h2");
+            availableHeading.innerText = "Available products:";
+            document.body.append(availableHeading)
+            let newList = document.createElement("ul");
+            for (let i = 0; i < items.length; i++) {
+                let listEl = document.createElement("li");
+                listEl.innerText = items[i];
+                listEl.setAttribute('onclick', 'addItemToCart(this.textContent)')
+                newList.append(listEl);
+            }
+            document.body.append(newList);
+        }
+
+        function displayCart() {
+            if (document.getElementById("divItem")) {
+                let products = document.getElementById("cartListPurchased");
+                products.remove();
+            }
+            else {  
+                let info = document.createElement("h2");
+                info.innerText = "Your cart:";
+                document.body.append(info);
+                let products = document.createElement("div")
+                products.setAttribute("id", "divItem");
+                document.body.append(products)
+            }
+            updateCart();
+        }
+
+        function updateCart() {
+            let divItems = document.getElementById("divItem");
+            let listItem = document.createElement("ul");
+            listItem.setAttribute("id", "cartListPurchased");
+            let cart = getCartFromStorage();
+            if (JSON.stringify(cart) === '{}') {
+                let itemEmpty = document.createElement("li")
+                itemEmpty.innerText = "Your cart is empty";
+                listItem.append(itemEmpty);
+            }
+            else {
+                let clearItem = document.createElement("li");
+                clearItem.innerText = "Clear my cart";
+                clearItem.onclick = () => {
+                    clearCart();
+                }
+                listItem.append(clearItem);
+                for (const property in cart) {
+                    let listEl = document.createElement("li")
+                    let aLink = document.createElement("a");
+                    aLink.innerText = " (remove)";
+                    listEl.innerText = `${property} x ${cart[property]}`;
+                    aLink.onclick = () => {
+                        removeItemFromCart(property);
+                    }
+                    listEl.append(aLink);
+                    listItem.append(listEl);
+                }
+            }
+            divItems.append(listItem);
+            document.body.append(divItems);
+        }
+    </script>
+</body>
+</html>
